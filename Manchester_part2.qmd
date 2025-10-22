@@ -1,0 +1,236 @@
+---
+title: Statistical inference using weights and survey design 
+# subtitle: 2. Inference in theory and practice
+author: Pierre Walthéry
+date: today
+date-format: MMMM YYYY
+mainfont: Arial
+sansfont: Arial
+embed-resources: true
+resource-path: 
+       - pics/
+       
+format:
+# pdf:
+#     latex-tinytex: true
+#     pdf-engine: lualatex
+  revealjs:
+     institute: UK Data Service
+     scrollable: true
+     theme: [default, tooling.scss]
+     header: Statistical inference using weights and survey design
+
+     header-logo: UKDS_Logos_Col_Grey_300dpi.png
+     embed-resources: true
+    
+ 
+
+filters:
+  - reveal-header
+---
+ <!-- If rendering of this script returns an error  --> 
+ <!-- run quarto add shafayetShafee/reveal-header
+ <!-- In the project  directory -->
+
+#  Inference in theory and practice
+
+
+## This session  
+1.  Design-based inference from social surveys
+2.  Real world vs ideal world inference
+3.  What to take into account
+4.  Scenarios
+
+
+#  1 Design-based inference from social surveys 
+
+## Inference
+
+- Consists of estimating parameters of interest based on the survey data: 
+
+    - Point estimates such as means or median
+    - Their degree of precision: confidence intervals or standard errors. 
+    
+- We have seen that both estimates are affected by the sample design:
+
+    - by increasing the sampling fraction for some groups, stratification improves the precision of estimates,
+    - whereas by in effect shrinking the sampled population, clustering  negatively impacts precision. 
+
+- As most surveys use a combination of both, the impact of survey design is not straightforward to assess, will depend on the quantity estimated and the groups of interest. 
+
+- Introductory courses tend to leave out this aspect, which may give a false impression of simplicity to users.
+
+## Model vs design-based estimation
+- There are traditionally two main ways to produce population estimates from surveys while accounting for the survey design: 
+
+  - either by directly using methods that correct estimates for the characteristics of the sample - also known as a  *design-based estimation*... 
+  - or by modelling the effect of  the survey design - the *model-based approach*, which rely on techniques such as multilevel modelling.
+  
+- We will only focus on the design based approach as it tends to be more straightforward for estimating common population parameters such as means,  medians, proportions,  and totals.     
+
+## Survey weights (1)
+- Even with data producers' best effort, no real world social survey enables unbiased estimation out of the box. Adjustments are necessary in order to reflect  under/over represented population characteristics
+
+  - *Survey weights* are a special type of variable in survey datasets, whose value reflects the relative 'importance' of observations in the sample. 
+  - Prevent estimates from being biased by compensating for over/under representation of some observations. 
+  - Usually higher for observations less likely to be part of the sample (ie for young men in urban areas), lower for those more likely to be part of the sample (ie women over 50). 
+
+
+## Survey weights (2)
+
+- They are usually made of three components:
+
+  - a *design* component that accounts for issues of unequal probability of selection of sample members resulting from survey design;
+  - a *non-response* component, correcting for (known) lower propensity to take part to surveys among certain categories of respondents.
+  - A *calibrating* or benchmarking component that ensures that weighted demographic variables, such as age, sex and geography, match the current ONS population estimates.
+
+- These  are sometimes called ‘weights’ individually (eg 'Design weights'), but in practice they are often merged into a single variable. 
+- Others may be present in datasets, such as longitudinal; benefit units components
+
+## Survey weights (3)
+- Survey weights may also be rescaled in order to inflate sample counts to population totals thus becoming *grossing weights*. 
+
+- In that sense, the numerical values of the weights are an indication of the number of units these observations ‘represent’ in the population.
+
+- Computation of weights rely on calibration algorithms:
+
+  - Optimise the conditional distribution of  observations across weighting variables in a 3+ variable crosstab (eg age, gender, economic status)... 
+  - ... While minimising the standard errors (which depends on the number of observation in each cell of the table)...
+  - ... And maximising representativeness (making sure that all cells have observations).
+
+- Using survey weights to correct for non-response or unequal probability of selection also affects the precision of estimations - often negatively - and this should be taken into account.
+
+
+## Survey design variables 
+
+- Usually consists of identifiers used during the sampling process:
+
+    - Strata
+    - Clusters  especially  *Primary Sampling Units* (PSU), that is clusters that were drawn during the first stage of sampling. 
+
+- Used in conjunction with weights,  enable users to improve the  accuracy of estimates (with the help of dedicated survey estimation functions in statistical packages) from those  solely relying on survey weights.
+- Unfortunately, whereas virtually all  surveys curated by the UK Data Service include weights, survey design variables are not always provided by data producers due to data protection concerns.
+
+## Design effects and design factors 
+
+$D_{eff}$ and $D_{eft}$  are two versions of a coefficient meant to quantify  how much estimate standard errors from a complex sample differ from what it would have been under simple random sampling [@Kish1995]. 
+
+- $D_{eft}$ is  the ratio of the variance of an estimated parameter given the sample design to the same variance computed under the assumption of SRS.The $D_{eft}$ is the square root of the Design Effect. 
+
+- $D_{eft}<1$ denotes a smaller variance than under SRS, that is an *improvement* in precision, whereas  $D_{eft}>1$ denotes a *loss* of precision. 
+- Potentially users to manually correct standard errors and confidence intervals produced under the assumption of simple random sampling. 
+- Data producers sometimes publish $D_{eft}$  that can be used to adjust standard errors computed under an assumption of SRS - that is without using  survey design information. 
+
+
+# 2. Real world inference
+
+## Ideal vs real world inference
+- In an ideal world, high quality inference  relying on weights and survey design variables for maximum precision should be the default option. 
+- In practice however, this is not always possible... Or even an absolute necessity:
+
+  - The necessary variables are not necessarily present
+  - Low vs high stake analysis for which the highest degree of precision might not be required by your analysis
+  - Complexity of the analysis
+  - Software issues
+  - What are we in fact estimating?
+
+## Availability of variables
+- UKDS-curated dataset are usually available under one of three flavours: open, safeguarded (EUL), secure:
+
+  - Most data producers include weights...
+  - A significant number of studies available under EUL do not include survey design variables ie PSU and strata 
+  - Users are therefore left with the  option of either:
+  
+    - Using estimations procedures that assume simple random sampling and be explicit about likely bias of estimates... 
+    - Or adjust their standard error when Design factors are published by  data producers.  
+
+## How precise does your study need to be?
+- It is often assumed that by default, the highest degree of precision should be sought in any analysis.
+- Actual real-world circumstances of statistical analysis differ widely. At two extremes:
+
+  - Life or death studies, for instance when the relative costs and  benefits  of a medicine needs to be assessed
+  - Some background statistics on the general characteristics of a population for an undergraduate essay or a  press release
+
+- Clearly, striving to/spending a significant amount of time to  obtain the most precise estimates makes more sense in the former rather than the latter case.  
+  - Precision comes at a  cost, mostly but not only in terms of time.
+
+
+## Subpopulation and sample size 
+
+- Most statistical software will compute near identical *weighted* point estimates irrespective of whether the proper sample design has been accounted for. 
+- What will differ will be the variability and therefore the precision of the estimate ie confidence intervals and/or standard errors.
+- We also know that the effect is likely to be larger, the smaller the number of observations:
+
+  - Small sample of a population 
+  - Also small groups of a larger sample
+
+- Therefore (lack of) precision will matter more, the more specific the analysis.
+
+## Software side of things
+
+#tldr: 'weights' do not always mean 'survey weights'
+
+- The notion of weight in statistics extends beyond what we have seen so far in the context of survey estimation.
+- As a result 'weight' functions used by statistical software do not always or sometimes mainly treat weights as survey weights
+
+- Two usages  of weight in most statistical software:
+
+  - Command-specific weights are specified in the context of individual commands and often are not meant to be usd with survey weights
+  - Survey weights: ie weights used in the context of estimation specific to survey design:
+
+- Use command specific or on the fly weighting at your own risks: some software are known to produce incorrect results: SPSS SAS
+
+## A plea for focusing on confidence intervals
+- Let's take one step back from point estimates
+- What are we in fact  estimating? 
+
+  - A single value which will almost certainly be wrong but may feel reassuring/easier to sell to an audience or..
+  - An interval within which population values are constantly  oscillating but more likely to be accurate
+  - ... And more importantly reflect the inherent uncertainty of statistical estimation  
+
+# 3. Estimation scenarios
+
+## Four options in practice
+
+-    Estimation accounting for survey weights and survey design variables using survey-specific commands
+-    Estimation accounting for survey weights only using survey-specific commands
+-    Estimation using weighted standard commands
+-    (Unweighted estimation)
+
+## When survey design variables are available
+
+
+1.    Find out about the survey design and identify the relevant weights and survey design variables using the data documentation
+2.    Declare the survey design using software-specific commands
+3.    Produce the estimates of interest, using survey design specific estimation commands available
+4.    Document the confidence interval for the estimate of interest or alternatively the point estimates and its standard error.
+5.    If required, provide a brief discussion of the possible source of bias of the results (specifically under/over estimation of the uncertainty of the estimates)
+
+
+## SD variables  not available in the EUL version, but are in restricted dataset
+
+- Do a cost - benefit analysis of applying for a version of the data that includes the SD variables, a process that can take some time. 
+- Information about how to apply for Secure Lab access is available on the UK Data Service  website.
+
+## SD variables  unavailable/ costly to acquire
+
+- Check whether the estimates  have been published by the data producer, in which case computation may  not be needed
+- Find out about the weights in the data documentation
+- Declare the survey design as SRS using survey commands
+- Compute your estimates, using survey estimation commands then:
+
+  - Check whether the data producer has published design effects; (also  Deft for the same population at another point in time).
+  - If so, adjust standard errors/CI accordingly
+  - If no Deft are available, report SRS estimates; make it clear that the results are likely to be  biased 
+- The wider the SE or CI under SRS assumptions the larger the likely bias. 
+- Or: the smaller the (sub)sample, the larger the likely bias. 
+- In case of significance testing,  good practice is to rely on .01 or .001 significance thresholds
+
+## One slide summary
+
+- Using survey design functions is often the safer thing to do, even when survey design variables are not present
+- Do not use on the fly weighting with grossing weight in SAS or SPSS
+- Do a cost-benefit analysis of the stake of your research vs the time cost of trying to obtain high quality estimates
+- Read the data documentation/look up  data producers website for Design factors or published estimates
+- Try to think of/reportyour estimates as a range of values ie confidence intervals rather than a point estimates. 
+

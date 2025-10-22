@@ -1,0 +1,22 @@
+color:
+  palette:
+    white: "#FFFFFF"
+    purple: "#702082"
+    grey: "#4d4f4e"
+  background: white
+  foreground: grey
+  
+logo:
+  images:
+    small:
+      path: "pics/UKDS_Logos_Col_Grey_300dpi.png"
+      alt: "Test"
+
+typography:
+  headings:
+    color:
+      light: purple
+      dark: purple
+  fonts:
+    - family: "Open Sans"
+  
