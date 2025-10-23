@@ -5,7 +5,7 @@
 UK Data Service training resources for learning statistical inference from large scale social surveys using weights and survey design variables 
 
   
-  1. [Survey Design: a refresher](https://ukdataserviceopen.github.io/SurveySlides/Manchester_part1.html)
-  2. [Inference in theory and practice](https://ukdataserviceopen.github.io/SurveySlides/Manchester_part2.html)
-  3. [R examples](https://ukdataserviceopen.github.io/SurveySlides/Manchester_part3.html)
-  4. [Stata examples](https://ukdataserviceopen.github.io/SurveySlides/Manchester_stata.html)
+  1. [Survey Design: a refresher](https://ukdataserviceopen.github.io/InferenceSlides/Manchester_part1.html)
+  2. [Inference in theory and practice](https://ukdataserviceopen.github.io/InferenceSlides/Manchester_part2.html)
+  3. [R examples](https://ukdataserviceopen.github.io/InferenceSlides/Manchester_part3.html)
+  4. [Stata examples](https://ukdataserviceopen.github.io/InferenceSlides/Manchester_stata.html)
