@@ -21,6 +21,14 @@ include-after-body:
         });
       </script>
 
+filters:
+  - reveal-header
+  - collapse-callout
+  
+collapse-callout:
+  all: true
+
+
 format: 
   revealjs:
     scrollable: true
@@ -31,8 +39,7 @@ format:
     css: ukds25.css
     embed-resources: true
     smaller: true
-filters:
-  - reveal-header
+  
 
 execute: 
   echo: true
@@ -56,10 +63,10 @@ execute:
 2.  Means, proportions, CI
 3.  When survey design variables are not present
 
-##  Data requirements
+##  Data and software requirements
 
 - An up to date  copy of R (with the `dplyr`,  `haven`,  `survey` and `Hmisc` packages installed) or Stata  
-- An active account with UKDS (for downloading the datasets)
+- An active account with the UK Data Service (for downloading the datasets)
 - We will  use data from:
 
   - The  [2017 British Social Attitudes Survey (BSA)](https://beta.ukdataservice.ac.uk/datacatalogue/studies/study?id=8450)[@NatCen2024]
@@ -84,18 +91,21 @@ execute:
                              mydata)`
 ```      
 
-  - Compute estimates with survey-specific functions: `svymean(myvar,mydata.s)`, `svytab(myvar,mydata.s)`, etc
+  - Compute estimates with survey-specific functions: 
+  
+    - `svymean(myvar,mydata.s)`
+    - `svytab(myvar,mydata.s)`
+   ...
 
 ## Command-based weighting in R
 
 - R  does not provide a unified set of functions for computing command-based weighted estimates. 
-- Implementation of weighting may vary between packages, but algorithms are usually  described in detail in  package documentation. 
-- R Base has only one weight-aware function: `weighted.mean()`
-- The Hmisc package offers a more comprehensive set of weighted estimation functions:
+- Implementation of weighting may vary between packages, but algorithms are usually  described in detail in the package documentation. 
+- Base R  has only one weight-aware function: `weighted.mean()`
+- Some R packages offer a more comprehensive set of weighted estimation functions:
 
-  - `wtd.mean()`
-  - `wtd.var()`
-  - `wtd.quantile()`
+  - `Hmisc`: `wtd.mean()`, `wtd.var()`, `wtd.quantile()`
+  - `summarytools`: `descr()`, `freq()`
 
 - Confidence intervals and standard errors still have to be computed manually
 
@@ -104,17 +114,17 @@ execute:
 - Stata provides comprehensive support for computing survey design-informed  estimates from survey data
 - Implementation logic similar to R:
 
-  - Declare the survey design using svyset
+  - Declare the survey design using `svyset`
   
     - `svyset id=psu_var [pweights=weight_var],strata(strata_var)`
     
-  - Use `svy:` - prefixed commands for estimation:
+  - Subsequently use `svy:` - prefixed commands for estimation:
   
     - `svy:mean myvar`, `svy:tab myvar` etc...
 
 ## Stata command-based weighting  - 1
 
-- Users may add sampling weights to most Stata estimation commands, or use survey-specific commands. The latter is recommended. 
+- Users may add survey weights to most Stata estimation commands, or use survey-specific commands. The latter is recommended. 
 
 - Stata distinguishes between four kinds of (dealing with) weights: 
 
@@ -123,22 +133,26 @@ execute:
   - importance weights (`iweight`) and 
   - probability weights (`pweight`). 
 
-- These mostly differ in the way standard errors are computed 
+- These mostly differ in the way variance standard is computed 
 
 
 ## Stata command-based weighting  - 2
 
 - Survey weights should be treated as *probability weights* or `pw`. 
-
-- Key estimation commands, such as `summarise` or `tab` do not allow using `pw`:  this is to nudge users to rely on the `svy:` commands instead
 .
-- 'On the fly' weighting (i.e. not using survey design functions) in Stata consists in the weighting variables being specified between square brackets. 
+- Command-based weighting (i.e. not using survey design functions) in Stata consists in the weighting variables being specified between square brackets. 
 
     - `stata_command myvar [pw=weight_var]`
 
-- It is tempting to to specify instead the wrong  kind of weights function  (`fw` or `aw`) if one does not wish to use the survey design functions. You may get the correct point estimates, but your standard errors are likely to be incorrect  Do this at your own risk
+- Common estimation commands, such as `summarise` or `tab` do not allow using `pw`
 
-# 2.  Means, proportions, CIs
+  - $\longrightarrow$ This is to nudge users to rely on the `svy:` commands instead
+
+- Some prefer to  specify the wrong kind of weighting function  instead (`fw` or `aw`) in order to avoid using the survey design functions. You may get the correct point estimates, but your variance/standard errors are likely to be incorrect.  
+
+  - **Do this at your own risk!**
+
+# 2.  Means, <br>proportions, <br> confidence intervals
 
 
 ## Identifying the survey design 
@@ -151,11 +165,19 @@ We first need to find out about the survey design that was used in the 2017 BSA,
 
   - How many stages were there, and what were the population units sampled?
   - What were the primary sampling units; the strata (if relevant)?
+  
+## Answer to question 1
+
+- The 2017 BSA is a three stage stratified random survey, with postcode sectors, adresses and individuals as the units selected at each stage. 
+
+- Primary sampling units were furthermore stratified according to geographies (sub regions), population density, and proportion of owner-occupiers. 
+
+- Sampling fraction (or proportion) was proportional to the size of postcode sectors (ie number of addresses)
 
 
 ## Finding  the survey design variables 
 
-Now that we are a bit more familiar with the way the survey was designed, we need to try and identify the design 
+Now that we are a bit more familiar with the way the survey was designed, we can to try and identify the design 
 variables available in the dataset. The information can usually be found in the user manual or the data dictionary available under `mrdoc/ukda_data_dictionaries.zip` The file may need to be decompressed  separately.
 
 **Question 2**
@@ -163,6 +185,12 @@ variables available in the dataset. The information can usually be found in the 
 - What survey design variables are available? 
 - Are there any that are missing -- if so which ones? 
 - What is the name of the weights variables?
+
+::: {.callout-note}
+
+From the Data Dictionary it appears that the primary sampling units (sub regions) are identified bySpoint and the strata byStratID. The weights variable isWtFactor. Addresses are not provided but could be approximated with a household identifier.
+
+::: 
 
 ## Preparing the data - R  
 
@@ -173,10 +201,12 @@ library(haven)                                                              ### 
 library(Hmisc)                                                              ### Extra statistical functions
 library(survey)                                                             ### Survey design functions
 library(ggplot2)
-setwd("~/OneDrive/trainings/Inference_workshops/Manchester_Nov24/")               ### Edit as appropriate
+setwd("~/OneDrive/trainings/Inference_workshops/Manchester_Nov24/")         ### Edit as appropriate
 datadir<-"~/Data/"                                                          ### Edit as appropriate
 bsa17<-read_dta(paste0(datadir,"bsa/UKDA-8450-stata/bsa2017_for_ukda.dta")) ### Importing Stata format dataset
-dim(bsa17)
+dim(bsa17)                                                                  ### Check the dataset
+
+### You can also use `View()`
 ```
 
 - We can now specify the survey design using:
@@ -185,7 +215,7 @@ dim(bsa17)
   - `StratID` as strata ids, 
   - `WtFactor` as weights. 
 
-##  Specifying the survey design in R
+##  Specifying the survey design in R (1)
 
 - We create a `svydesign` object, i.e. a survey design informed copy of the data, which will be used for  subsequent estimation.
 
@@ -196,8 +226,9 @@ bsa17.s<-svydesign(ids=~Spoint,
                    data=bsa17)        ### Specifying the survey design
 class(bsa17.s)                        ### Examining the svydesign object                                        
 ```
+##  Specifying the survey design in R (2)
 
-- We can inspect   the content of `bsa17.s`. Do this at your own risks:
+- We can inspect   the content of `bsa17.s`. Beware, the output is really large!
 
 ```{r 5_21}
 summary(bsa17.s)                      ### ... And looking at its content
@@ -218,7 +249,10 @@ svymean(~RAgeE,bsa17.s)
 confint(                                  ### Computing the confidence interval...
   svymean(~RAgeE,bsa17.s)                 ### And the mean
   )                   
-
+```
+- For a slightly nicer output:
+```{r nicer1}
+#| code-fold: true
 round(                                    ### Rounding the results to one decimal point
   c(
     svymean(~RAgeE,bsa17.s),              ### Computing the mean...
@@ -236,7 +270,7 @@ round(                                    ### Rounding the results to one decima
   - inferring the mean age in the population?
   - computing the uncertainty  of this  estimate? 
 
-## Answer 1: command-based weighting
+## Q. 3 answer (1): command-based weighting
 
 - We need to compute means and CI separately: 
 
@@ -257,12 +291,12 @@ a.se<-sqrt(
          )
 
 c(a.m,                                       ### Concatenating the mean..
-  a.m-1.96*a.se,                             ### ... the lowbound of the CI
+  a.m-1.96*a.se,                             ### ... the lower bound of the CI
   a.m+1.96*a.se)                             ### ... and the higher bound
 ```
 
  
-## Answer 1 (continued):  unweighted estimates
+## Q. 3 answer (2):  unweighted estimates
 
 
 ```{r}
@@ -278,11 +312,11 @@ c(ua.m,                                     ### and putting it all together
 
 ```
 
-## Answer - 2
+## Question 3 answer: Summary
 
 - Not using weights results in  overestimating the mean age in the population (of those aged 18+) by about 4 years. 
 - This might be due to the fact that older respondents are more likely to take part to surveys. 
-- Using `on the fly` weighting does not alter the value of the estimated population mean when compared with SD informed estimates...
+- Using command-based weighting does not alter the value of the estimated population mean when compared with SD informed estimates...
 - ... but would lead us to overestimating the precision/underestimate the uncertainty of our estimate -- by about plus or minus 3 months. 
 
 
@@ -305,9 +339,9 @@ attr(bsa17$Politics,"label")
 
 ```{r 5_4_3}
 table(
-  droplevels(                            ### We are using droplevels() in order to hide categories
-             as_factor(bsa17$Politics, "both")   ### ... without any observations
-             )
+  droplevels(                                    ### We are using droplevels() 
+             as_factor(bsa17$Politics, "both")   ### in order to hide categories
+             )                                   ### ... without any observations
   ) 
 ``` 
 
@@ -340,7 +374,7 @@ bsa17.s<-svydesign(ids=~Spoint,
 
 ```
 
-- Let us now estimate the confidence intervals for  these proportions.  Software like Stata or SPSS  usually doesn't  show us  what is happening under the bonnet.  R requires more coding, but also gives a better understanding of what we are actually estimating. 
+- Let us now estimate the confidence intervals for  these proportions.  Software like Stata or SPSS  usually doesn't  show us  what is happening under the bonnet.  R requires more coding, but also enables us to better understand what we are actually estimating. 
 
 - Confidence intervals for proportions of categorical variables are in fact  computed as a sequence of binomial/dichotomic estimations -- i.e. one for each category. 
 
@@ -348,7 +382,7 @@ bsa17.s<-svydesign(ids=~Spoint,
 - In R we  specify this via `svyciprop()` and `I()`:
 
   - The former computes the proportion and its confidence interval (by default 95%)...
-  - ... whereas the latter allows us to define the category of interest of a polytomous variable.
+  - ...  the latter allows us to define the category of interest of a polytomous variable.
   - As before, we could have used a recoded dichotomic variable instead
 
 ```{r 5_6_1}
@@ -362,8 +396,8 @@ p
 
 ```{r 5_6_2}
 round(100*
-        c("% interested"= p[[1]],              ### Extracts the point estimate
-          "95% CI - LB"=attr(p,"ci")[[1]],"95% CI - UB"=attr(p,"ci")[[2]]       ### Extracts the CI
+        c("% interested"= p[[1]],                                          ### Extracts the point estimate
+          "95% CI - LB"=attr(p,"ci")[[1]],"95% CI - UB"=attr(p,"ci")[[2]]  ### Extracts the CI
           ),1 
       )
 ```

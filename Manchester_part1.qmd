@@ -1,14 +1,18 @@
 ---
 title: Statistical inference using weights and survey design 
-#subtitle: 1. Survey Design and Statistical inference - a refresher
+subtitle: 1. Survey Design and Statistical inference
 author: Pierre Walthéry
 date: today
 date-format: MMMM YYYY
-#mainfont: "Open Sans"
-#sansfont: "Open Sans"
+mainfont: "Open Sans"
+sansfont: "Open Sans"
 embed-resources: true
 resource-path: 
        - pics/
+
+bibliography: weighting_refs.bib
+nocite: |
+  @*
        
 format:
   revealjs:
@@ -29,8 +33,12 @@ filters:
 
 - Toilets/fire exits
 - Four 50 minutes sessions 
-- Coffee and refreshments and lunch will be served 
+- Coffee / refreshments and lunch 
 - Your feedback is very important!
+
+## Leave us your feedback
+
+![](pics/QR_code_7_Nov.png){.nostretch width="40%" fig-align="center"}
 
 ## Plan of the day
 
@@ -65,14 +73,14 @@ filters:
 
 ## Data curated 
 - Surveys:
-  - Large-scale cross-sectional UK government surveys
+  - Large-scale cross-sectional UK government surveys series
   - Major UK longitudinal surveys 
-  - Multinational aggregate databases and survey data
+  - Multinational survey data & aggregate databases
 - Census data
     – modern and historic records
 
 - Business and administrative microdata
-- Deposited survey data  and multimedia/qualitative data sources
+- One off surveys, multimedia and qualitative data deposited on [Reshare](https://reshare.ukdataservice.ac.uk/)
 
 ## User support and training
   - Helpdesk for data-related queries
@@ -84,24 +92,30 @@ filters:
 - Supporting data literacy among undergraduate students
 
 
-## What this workshop is...
+## Good to know
 
-- Second of a series of introductory workshops on using weights and survey design information to compute accurate estimates
-- Practical, everyday user-oriented
-- Plain English
+### What this workshop is...
+
+- Second of a series of introductory workshops on using weights and survey design information to compute accurate population estimates
+- Will be used to design asynchronous material
+- Practical, everyday users-oriented
+- Plain English: (almost) no formula
 - New approach: community of practice
 
-## And isn't
+### And isn't
 
-- A comprehensive course on complex survey design/statistical inference
-- An introduction to R or Stata
-- An introduction to advanced topic of statistical inference
-- Some basic degree of familiairyt with the topic is assumed
+- A full course on complex survey design/statistical inference
+- An introduction to R / Stata
+- An introduction to advanced topics of statistical inference
+- Quick, easy to use recipes for computing weighted estimates 
+
+tl;dr: some basic degree of familiarity with the topic is assumed
 
 # 1. Survey design and statistical inference - a refresher
 
-
 # Basics of Survey Design
+
+![](pics/inference.png){fig-alt: "Stylised image of the circular relationship between inference and sampling .nostretch width="80%" fig-align="center"}
 
 ## Samples and sampling 
 - Survey design:  strategies used to collect samples. 
@@ -135,33 +149,35 @@ filters:
   - representativeness and precision (ie sample size)...
   - while keeping costs down (surveys are expensive!). 
 
-- Large scale social surveys  tend to rely on other techniques  seen as better at striking this balance than SRS
+- Large scale social surveys  tend to rely on  techniques   better at striking this balance than SRS
 
   - To ensure correct representation of each country of the UK (ie by  drawing  separate samples for each one of them). 
   - To improve the precision of estimates estimates for  certain groups, for example ethnic minorities, and these need adequate sample size.
 
-- In that sense SRS is more of a theoretical possibility than a real world type of social surveys 
-    - *Complex sample design* covers everything else - perhaps not the best label
+- In effect SRS is more of a theoretical possibility than a real world sampling technique for  social surveys 
+    - *Complex sample design* --> everything else - perhaps not the best label!
 
 
 ## Common 'complex'  sampling techniques
 
-- **Clustering**  comes together with *multistage sampling*:  that is drawing sample units in several steps rather than all at once. 
-  
-    Consists of dividing the population into groups  *as internally heterogeneous as possible* - ie ‘mini populations’, some of which are then randomly drawn while others are left out. 
+- **Clustering**
 
-- **Stratifying** also consists in dividing the population into groups according to some characteristics, but this time, we will be drawing units from every one of them 
+  - Consists in dividing the population into groups  *as internally heterogeneous as possible* - ie ‘mini populations’, some of which are then randomly drawn while others are left out. 
+  - Comes together with *multistage sampling*:  i.e. drawing sample units in several steps rather than all at once
 
-- Adjusting sampling proportion
+- **Stratifying** also consists in dividing the population into groups according to predetermined characteristics, but this time  units are drawn from all of them 
+
+- **Adjusting sampling proportion** ie sampling more/less than the rest of the population for some groups
 
 ## The UK context
 
 - No sampling frame ie national register of the population
-- The closest to a sampling frame we have is the Postcode Address File from Royal Mail: a list of addresses 
+- The closest to it (in Great-Britain)  is Royal Mail's Postcode Address File: i.e. a  structured list of addresses 
 - For Northern Ireland the most commonly used is the Land and Property Services Agency’s (LPSA). 
 - We cannot use the PAF to directly draw samples of households or individuals, as their number at each address is not know.
 
-- However, the address structure of the PAF easily enables geographical clustering of UK surveys. Addresses, or ’delivery points’ cluster into larger units
+- However, the  structure of the PAF easily enables geographical clustering of surveys. Addresses, or ’delivery points’ cluster into larger units
+- Also addresses receiving   unusually large amounts of mail - likely to be businesses or institutions can be filtered out 
 
 ## Example
 :::: {.columns}
@@ -184,7 +200,7 @@ The previous figure illustrates  clustering with four districts:
 
 - The  higher level clusters, i.e. those at which the first random draw happened, are  the Primary Sampling Units (PSUs). 
 - Districts 1 and 4 have been selected to be in the sample. 
-- A second stage of sampling follows:  addresses are sampled from within the two sampled districts
+- A second stage of sampling follows:  addresses are sampled from within the two selected districts
 - Subsequent drawing of either: 
 
     - further clusters, for example, households or   
@@ -192,15 +208,18 @@ The previous figure illustrates  clustering with four districts:
 - In large scale surveys the PSUs are often geographical areas. 
 
 
-## Household level clustering -1 
-
+## Household level clustering - 1  
 :::: {.columns}
 
 ::: {.column width="60%"}
-- Arises in some  large-scale household surveys in the UK such as the Labour Force Survey. 
-- Imagine estimating the proportion of individuals born abroad from a population of 100 people  in 50 households. 
-- Those  born abroad are more likely to live together ‘clustered’ within households, than be scattered randomly across all households. 
-- some households being wholly overseas born, some mixed and most wholly UK born. 
+- Arises in some  large-scale household surveys such as the Labour Force Survey. 
+- Imagine:
+
+  - Estimating the proportion of individuals born abroad... 
+  - ... from a population of 100 people  in 50 households. 
+  - ... if  sampling one in ten household
+- Those  born abroad are more likely to live together ‘clustered’ within households, than spread randomly. 
+- Some households are  wholly overseas born, some mixed and most wholly UK born. 
 
 :::
 
@@ -224,24 +243,28 @@ Household 10: 3 UK born
 ## Household level clustering - 2 
 And so on…
 
-- Clustering within households means that if we select  one in ten of the households for our sample we might expect the sample to be less accurate in predicting the proportion of our population who were born outside the UK than if we had sampled individuals at random.
+- Clustering within households means that if we draw  one in ten of the households for our sample we might expect the sample to be less accurate in predicting the proportion of our population who were born outside the UK than if we had sampled individuals at random.
 
-- Clustering comes at the cost of making the sampling coarser - as  we shrink the size of the population from which it is drawn - reducing its diversity - which in turn makes the estimates draw from it less precise. 
+- Clustering comes at the cost of making the sample coarser - as  we shrink the size of the population from which it is drawn - reducing its diversity - which in turn makes the estimates draw from it less precise. 
 
 ## Stratification
 
-- In stratified sampling, the population is divided into groups, or strata, and a sample of units is selected from *each* strata. 
+- This time the population is divided into groups, according to some characteristics, and a sample of units is selected from *each* strata. 
+- Example: grouping addresses into three  'bands' of   area deprivation  
 - Stratified sampling ensures that the sample includes a certain proportion of units from the selected groups that may have been missed otherwise. 
-- By contrast with clustering, strata are constructed so as to maximise their internal homogeneity
-- It is considered that overall stratification increases the precision of survey estimates, by improving the representativeness of potentially less represented or harder to reach groups.
+- Unlike clusters, strata are meant to be as internally homogeneous as possible
+- Stratification tends to increases the precision of  estimates, by improving the number of units from  potentially less represented or harder to reach groups.
 
 
 
 ## An example of stratified sampling 
-![](pics/strata.png)
+![](pics/strata.png){.nostretch width="80%" fig-align="center"}
 
-##
-- The previous figure provides an example where the population is divided into four strata: North, South, East and West. Within each strata five sampling units (ie addresses) are selected.
+
+- The population is divided into four strata: North, South, East and West. 
+- Within each strata five sampling units (ie addresses) are selected.
+
+## Stratification
 
 - UK surveys are usually stratified: 
 
@@ -249,23 +272,31 @@ And so on…
     - socio-economic  characteristics (occupations)   
     - or demography (e.g. proportion of people who are pensioners in areas). 
 
-- Such information is usually obtained from Census data.
+- Such information  is usually obtained from (area-level) Census data.
 
 
 ## Sampling fraction
 
 - In simple random sampling, each element drawn from the sampling frame has an equal selection probability. 
 
-- In stratified sampling, *proportionate stratification* is when  the same sampling fraction is used accross all strata  
--   If we use  *disproportionate stratification*,  the sampling fraction varies across strata. This method is  is useful when a group of interest is small, ie less populated areas or ethnic minority groups. 
+- In stratified sampling, *proportionate stratification* is when  the same sampling fraction is used across all strata:
+  
+    - The number of units sampled is proportional to the size of a stratum
 
-- Disproportionate stratification will mean some groups are over-represented in the sample and therefore adjustments are needed before we can analyse the data.
+- *Disproportionate stratification* means that   the sampling fraction varies across strata. 
+
+  - This is  is useful when a group of interest is small, i.e. less populated areas or ethnic minority groups. 
+
+- Disproportionate sampling  results in some groups being over-represented in the sample:
+
+  - Adjustments are needed before we can analyse the data.
 
 
 ## One slide summary
 - There is no such thing as a sampling frame - a list of all UK residents to pick from
-- even if there were one, some people would be less likely to take part to survey than others. 
-- Most UK social surveys rely on  multi-stage clustering and stratification, alongside sampling proportionate to size 
+- Even if there were one, some people are known to  less easy to reach and/or less likely to take part in survey than others. 
+- Most UK social surveys rely on  *multi-stage clustering and stratification*, alongside *sampling proportionate* to size 
 - These strike a compromise between issues such as tackling non response, unequal probability of selection, improving the representativeness of hard to reach groups while keeping fieldwork costs down.
 
 
+## References
