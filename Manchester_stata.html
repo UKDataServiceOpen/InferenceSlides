@@ -1366,7 +1366,7 @@ Pierre Walthéry
 <ul>
 <li>weighing but not accounting for the sample design;</li>
 </ul></li>
-<li><p>neither using weights or accounting for the sample design?</p>
+<li><p>neither using weights or accounting for the survey design?</p>
 <ul>
 <li>When:
 <ul>
@@ -1381,7 +1381,7 @@ Pierre Walthéry
 <ul>
 <li>Opening the dataset and declaring the survey design (scroll down for full output)</li>
 </ul>
-<div id="8c0d5165" class="cell" data-execution_count="1">
+<div id="71200793" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <style>div.jp-Notebook .datagrid-container {min-height: 448px; }</style>
 </div>
@@ -1408,7 +1408,7 @@ Sampling weights: WtFactor
 <ul>
 <li>Computing the survey design-informed version of the mean…</li>
 </ul>
-<div id="349ef044" class="cell" data-execution_count="2">
+<div id="e276497e" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-stdout">
 <pre><code>. svy: mean RAgeE
 (running mean on estimation sample)
@@ -1433,7 +1433,7 @@ Number of PSUs   = 372            Population size = 3,988.0019
 <ul>
 <li>And the other two versions:</li>
 </ul>
-<div id="f45f3116" class="cell" data-execution_count="3">
+<div id="2124f52b" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-stdout">
 <pre><code>
 .   mean RAgeE [pw=WtFactor]
@@ -1464,26 +1464,13 @@ Mean estimation                          Number of obs = 3,988
 <h2>Answer - Stata</h2>
 <ul>
 <li>Not using weights results in overestimating the mean age in the population (of those aged 18+) by about 4 years.</li>
-<li>This might be due to the fact that older respondents are more likely to take part to surveys.</li>
-<li>Using <code>on the fly</code> weighting does not alter the value of the estimated population mean when compared with SD informed estimates…</li>
+<li>This might be due to the fact that older respondents are more likely to take part to surveys. # - Using command-based weighting does not alter the value of the estimated population mean when compared with SD informed estimates…</li>
 <li>… but would lead us to overestimating the precision/underestimate the uncertainty of our estimate – by about plus or minus 3 months.</li>
 </ul>
 </section>
-<section id="question-4" class="slide level2">
-<h2>Question 4</h2>
-<ul>
-<li><p>What is the proportion of respondents aged 17-34 in the sample, as well as its 95% confidence interval?</p>
-<ul>
-<li>You can use <code>RAgecat5</code></li>
-</ul></li>
-</ul>
-</section>
-<section id="answer" class="slide level2">
-<h2>Answer</h2>
-<ul>
-<li>Proportions and answer to question 4 (Scroll down the slide for full output)</li>
-</ul>
-<div id="1af99496" class="cell" data-execution_count="4">
+<section id="computing-a-proportion-and-its-95-confidence-interval" class="slide level2">
+<h2>Computing a proportion and its 95% confidence interval</h2>
+<div id="7601a031" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-stdout">
 <pre><code>
 . ** Creating a dummy variable for significant interest in politics
@@ -1523,7 +1510,7 @@ Key: proportion = Cell proportion
 <ul>
 <li>… Proportions and CIs</li>
 </ul>
-<div id="2b6be54b" class="cell" data-execution_count="5">
+<div id="84848495" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-stdout">
 <pre><code>. svy:ta Politics2, percent ci 
 (running tabulate on estimation sample)
@@ -1553,12 +1540,21 @@ Key: percentage = Cell percentage
 </div>
 </div>
 </section>
-<section id="section-3" class="slide level2">
-<h2></h2>
+<section id="question-4" class="slide level2">
+<h2>Question 4</h2>
+<ul>
+<li><p>What is the proportion of respondents aged 17-34 in the sample, as well as its 95% confidence interval?</p>
+<ul>
+<li>You can use <code>RAgecat5</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="answer" class="slide level2">
+<h2>Answer</h2>
 <ul>
 <li>Same for age categories</li>
 </ul>
-<div id="026bcd2b" class="cell" data-execution_count="6">
+<div id="28b63c45" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-stdout">
 <pre><code>. svy:ta RAgecat5, percent ci                         
 (running tabulate on estimation sample)
@@ -1598,7 +1594,7 @@ Key: percentage = Cell percentage
 </section>
 <section id="not-accounting-for-domain-estimation" class="slide level2">
 <h2>Not accounting for domain estimation</h2>
-<div id="a37d8ead" class="cell" data-execution_count="7">
+<div id="a6f8eee6" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-stdout">
 <pre><code>. svy:prop Politics2 if GOR_ID==1, percent  cformat(%9.1f)
 (running proportion on estimation sample)
@@ -1627,7 +1623,7 @@ Note: Missing standard errors because of stratum with single
 <ul>
 <li>% interested in politics in the North East…</li>
 </ul>
-<div id="cf2001d3" class="cell" data-execution_count="8">
+<div id="feaf7dc6" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-stdout">
 <pre><code>. svy,subpop(if GOR_ID==1):prop Politics2, percent  cformat(%9.1f)
 (running proportion on estimation sample)
@@ -1653,12 +1649,12 @@ Note: 151 strata omitted because they contain no subpopulation
 </div>
 </div>
 </section>
-<section id="section-4" class="slide level2">
+<section id="section-3" class="slide level2">
 <h2></h2>
 <ul>
 <li>… And in London</li>
 </ul>
-<div id="996d1212" class="cell" data-execution_count="9">
+<div id="69f9d3a6" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-stdout">
 <pre><code>. svy,subpop(if GOR_ID==7):prop Politics2, percent  cformat(%9.1f)
 (running proportion on estimation sample)
@@ -1684,12 +1680,12 @@ Note: 138 strata omitted because they contain no subpopulation
 </div>
 </div>
 </section>
-<section id="section-5" class="slide level2">
+<section id="section-4" class="slide level2">
 <h2></h2>
 <ul>
 <li>Alternative syntax</li>
 </ul>
-<div id="5c805a29" class="cell" data-execution_count="10">
+<div id="40a42bec" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-stdout">
 <pre><code>. svy:prop Politics2,over(GOR_ID) percent  cformat(%9.1f)
 (running proportion on estimation sample)
@@ -1746,82 +1742,9 @@ D Yorkshire and The Humber  |       35.6        3.2          29.5        42.2
 </section>
 <section id="answer-1" class="slide level2">
 <h2>Answer</h2>
-<div id="fb531fcd" class="cell" data-execution_count="11">
+<div id="e22d34bf" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-stdout">
 <pre><code>
-. egen RagSex=group(RAgecat5 Rsex),label // Creates age groups by sex variable
-
-. svy: tab  Politics2 if RAgecat5==1 &amp; Rsex==1, percent ci 
-(running tabulate on estimation sample)
-
-Number of strata = 138                            Number of obs   =        339
-Number of PSUs   = 215                            Population size = 573.962978
-                                                  Design df       =         77
-
-----------------------
-RECODE of |
-Politics  |
-(How much |
-interest  |
-do you    |
-have in   |
-politics? |
-)         | percentage
-----------+-----------
-        0 |      57.28
-        1 |      42.72
-          | 
-    Total |        100
-----------------------
-Key: percentage = Cell percentage
-
-Note: Missing standard errors because of stratum with single sampling unit.
-
-. </code></pre>
-</div>
-</div>
-</section>
-<section id="section-6" class="slide level2">
-<h2></h2>
-<ul>
-<li>Contrast with:</li>
-</ul>
-<div id="27095fb2" class="cell" data-execution_count="12">
-<div class="cell-output cell-output-stdout">
-<pre><code>
-. svy: prop Politics2,over(RagSex ) percent   cformat(%9.1f) 
-(running proportion on estimation sample)
-
-Survey: Percent estimation
-
-Number of strata = 159                Number of obs   =      3,988
-Number of PSUs   = 372                Population size = 3,988.0019
-                                      Design df       =        213
-
-------------------------------------------------------------------
-                 |             Linearized            Logit
-                 |    Percent   std. err.     [95% conf. interval]
------------------+------------------------------------------------
-Politics2@RagSex |
-   0 17-34 Male  |       57.3        2.6          52.0        62.4
- 0 17-34 Female  |       73.7        2.3          68.9        77.9
-   0 35-54 Male  |       49.2        2.1          45.1        53.4
- 0 35-54 Female  |       65.9        1.8          62.2        69.3
-     0 55+ Male  |       42.2        2.0          38.4        46.1
-   0 55+ Female  |       57.0        1.8          53.5        60.4
-  0 DK/Ref Male  |      100.0          .             .           .
-0 DK/Ref Female  |        0.0  (no observations)
-   1 17-34 Male  |       42.7        2.6          37.6        48.0
- 1 17-34 Female  |       26.3        2.3          22.1        31.1
-   1 35-54 Male  |       50.8        2.1          46.6        54.9
- 1 35-54 Female  |       34.1        1.8          30.7        37.8
-     1 55+ Male  |       57.8        2.0          53.9        61.6
-   1 55+ Female  |       43.0        1.8          39.6        46.5
-  1 DK/Ref Male  |        0.0  (no observations)
-1 DK/Ref Female  |      100.0          .             .           .
-------------------------------------------------------------------
-
-. 
 . *  Men under 35
 . svy,subpop(if RAgecat5==1 &amp; Rsex==1):prop Politics2 ,percent  cformat(%9.1f) 
 (running proportion on estimation sample)
@@ -1868,6 +1791,58 @@ Number of PSUs   = 364            Population size = 3,908.1585
 --------------------------------------------------------------
 Note: 4 strata omitted because they contain no subpopulation
       members.
+
+. </code></pre>
+</div>
+</div>
+</section>
+<section id="section-5" class="slide level2">
+<h2></h2>
+<ul>
+<li>Contrast with:</li>
+</ul>
+<pre><code>svy: tab  Politics2 if RAgecat5==1 &amp; Rsex==1, percent ci 
+</code></pre>
+</section>
+<section id="alternative-syntax" class="title-slide slide level1 center">
+<h1>Alternative syntax</h1>
+<div id="34739777" class="cell" data-execution_count="12">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+. egen RagSex=group(RAgecat5 Rsex),label // Creates age groups by sex variable
+
+. 
+. svy: prop Politics2,over(RagSex ) percent   cformat(%9.1f) 
+(running proportion on estimation sample)
+
+Survey: Percent estimation
+
+Number of strata = 159                Number of obs   =      3,988
+Number of PSUs   = 372                Population size = 3,988.0019
+                                      Design df       =        213
+
+------------------------------------------------------------------
+                 |             Linearized            Logit
+                 |    Percent   std. err.     [95% conf. interval]
+-----------------+------------------------------------------------
+Politics2@RagSex |
+   0 17-34 Male  |       57.3        2.6          52.0        62.4
+ 0 17-34 Female  |       73.7        2.3          68.9        77.9
+   0 35-54 Male  |       49.2        2.1          45.1        53.4
+ 0 35-54 Female  |       65.9        1.8          62.2        69.3
+     0 55+ Male  |       42.2        2.0          38.4        46.1
+   0 55+ Female  |       57.0        1.8          53.5        60.4
+  0 DK/Ref Male  |      100.0          .             .           .
+0 DK/Ref Female  |        0.0  (no observations)
+   1 17-34 Male  |       42.7        2.6          37.6        48.0
+ 1 17-34 Female  |       26.3        2.3          22.1        31.1
+   1 35-54 Male  |       50.8        2.1          46.6        54.9
+ 1 35-54 Female  |       34.1        1.8          30.7        37.8
+     1 55+ Male  |       57.8        2.0          53.9        61.6
+   1 55+ Female  |       43.0        1.8          39.6        46.5
+  1 DK/Ref Male  |        0.0  (no observations)
+1 DK/Ref Female  |      100.0          .             .           .
+------------------------------------------------------------------
 
 . </code></pre>
 </div>

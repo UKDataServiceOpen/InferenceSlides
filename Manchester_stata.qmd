@@ -84,7 +84,7 @@ jupyter: nbstata
 - What would be the consequences of:
   
   - weighing but not accounting for the sample design; 
-- neither using  weights or accounting for the sample design?
+- neither using  weights or accounting for the survey design?
   
   - When: 
     - inferring the mean age in the population?
@@ -118,18 +118,10 @@ mean RAgeE
 
 - Not using weights results in  overestimating the mean age in the population (of those aged 18+) by about 4 years. 
 - This might be due to the fact that older respondents are more likely to take part to surveys. 
-- Using `on the fly` weighting does not alter the value of the estimated population mean when compared with SD informed estimates...
+# - Using command-based weighting does not alter the value of the estimated population mean when compared with SD informed estimates...
 - ... but would lead us to overestimating the precision/underestimate the uncertainty of our estimate -- by about plus or minus 3 months. 
 
-
-## Question 4
-- What is the proportion of respondents aged 17-34 in the sample, as well as its 95% confidence interval? 
-  
-  - You can use `RAgecat5`
-
-## Answer
-
-* Proportions and answer to question 4 (Scroll down the slide for full output) 
+## Computing a proportion and its 95% confidence interval
 
 ```{stata Stata_4}
 ** Creating a dummy variable for significant interest in politics
@@ -143,7 +135,13 @@ svy:ta Politics2
 ```{stata Stata_4.1}
 svy:ta Politics2, percent ci 
 ```
-## 
+## Question 4
+- What is the proportion of respondents aged 17-34 in the sample, as well as its 95% confidence interval? 
+  
+  - You can use `RAgecat5`
+
+## Answer
+
 -  Same for age categories
 
 ```{stata Stata_4.2}
