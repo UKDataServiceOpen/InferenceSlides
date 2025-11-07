@@ -1,6 +1,6 @@
 ---
 title: Statistical inference using weights and survey design
-subtitle: 3. Stata examples
+subtitle: 4. Stata examples (Exercises only)
 author: 
   name: Pierre Walthéry
 institute: UK Data Service
@@ -175,22 +175,21 @@ svy,subpop(if GOR_ID==1):prop Politics2, percent  cformat(%9.1f)
 svy,subpop(if GOR_ID==7):prop Politics2, percent  cformat(%9.1f)
 ```
 
-##
-
-- Alternative syntax
+##  Alternative  (not recommended)
 
 ```{stata Stata_5.2.2}
 svy:prop Politics2,over(GOR_ID) percent  cformat(%9.1f)
 ```
 
 ## Question 6
-- Using interest in politics as before, and three category age `RAgecat5`: 
+
+Using interest in politics as before, and three category age `RAgecat5`: 
   
   - Produce a table showing the proportion of respondents significantly interested in politics by age group and gender
-- Assess whether the age difference in interest for politics is similar for each gender.
-- Is it fair to say that men aged under 35 are more likely to declare being  interested  in politics  than women aged 55 and above?
+  - Assess whether the age difference in interest for politics is similar for each gender.
+  - Is it fair to say that men aged under 35 are more likely to declare being  interested  in politics  than women aged 55 and above?
   
-## Answer
+## Q6 - Answer
 
 ```{stata Stata_6}
 *  Men under 35
@@ -199,7 +198,7 @@ svy,subpop(if RAgecat5==1 & Rsex==1):prop Politics2 ,percent  cformat(%9.1f)
   svy,subpop(if RAgecat5==3 & Rsex==2):prop Politics2, percent  cformat(%9.1f) 
 ```
 
-##
+ 
 
 - Contrast with: 
   
@@ -208,12 +207,5 @@ svy: tab  Politics2 if RAgecat5==1 & Rsex==1, percent ci
 
 ```
 
-#  Alternative syntax
-```{stata Stata_6.1}
-egen RagSex=group(RAgecat5 Rsex),label // Creates age groups by sex variable
-
-svy: prop Politics2,over(RagSex ) percent   cformat(%9.1f) 
-
-```
 
 

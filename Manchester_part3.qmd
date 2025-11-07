@@ -152,6 +152,19 @@ execute:
 
   - **Do this at your own risk!**
 
+## What about longitudinal weights?
+
+- Longitudinal data can either be analysed:
+
+  - Cross-sectionaly (i.e. a single wave of data) $\longrightarrow$ cross-sectional weights
+  - Longitudinally (i.e. two or more waves of data) $\longrightarrow$ check your data documentation for the suitable weights:
+  
+    - Longitudinal weights may have been computed to account for attrition between two waves only
+    - ... Or several of them...
+    - The idea is to use the longitudinal weights from the last wave of data being used 
+  
+- From a software point of view, the above survey estimation functions apply to longitudinal data (with the correct weights!)  
+
 # 2.  Means, <br>proportions, <br> confidence intervals
 
 
@@ -471,9 +484,45 @@ We used `[-1]` above  to remove the column with region names from the results, s
 
 ## Proportions
 
-- The approach for proportion is similar: i.e. specify categories of interest, for example respondents who are  interested in politics, and replace `svymean` by `svyciprop`.
+- The approach for proportion is similar: i.e. specify categories of interest, for example respondents aged 17-34, and replace `svymean` by `svyciprop`.
 
 ```{r 5.8}
+
+c<-svyby(~I(RAgecat5==1),
+            by=~as_factor(GOR_ID),
+            svyciprop,
+            design=bsa17.s,
+            vartype = "ci")
+
+round(100*c[-1],1)
+```
+
+## Visualising CIs
+Let's now plot this output:
+
+```{r 5.8.1}
+#| output: asis
+ggplot(c, aes(x = `I(RAgecat5 == 1)`, y = rownames(c))) +
+  geom_point(size = 3, color = "#ff9800") +
+  geom_errorbar(aes(xmin = ci_l, xmax = ci_u), width = 0.1, color = "#ff9800") +
+  labs(
+    title = "% aged 17-34 by region",
+    y = "Government Office Region",
+    x = "% Aged between 17 and 34'"
+  ) +
+  theme_minimal(base_size = 14)
+
+```
+
+
+## Question 5
+- What is the 95% confidence interval for the proportion of people significantly interested in politics in the North East? 
+- Is the proportion likely to be different in London? In what way? 
+- What is the region of the UK for which the estimates are likely to be least precise?
+
+## Q5 Answer (1)
+Proportion of those interested in politics by region:
+```{r 5.8.2}
 
 c<-svyby(~I(Politics==1 | Politics==2),
             by=~as_factor(GOR_ID),
@@ -485,16 +534,10 @@ round(100*c[-1],1)
 ```
 
 
-
-## Question 5
-- What is the 95% confidence interval for the proportion of people significantly interested in politics in the North East? 
-- Is the proportion likely to be different in London? In what way? 
-- What is the region of the UK for which the estimates are likely to be least precise?
-
 ## Plotting CIs
 Let's now plot this output:
 
-```{r 5.8.2}
+```{r 5.8.3}
 #| output: asis
 ggplot(c, aes(x = `I(Politics == 1 | Politics == 2)`, y = rownames(c))) +
   geom_point(size = 3, color = "#ff9800") +
@@ -508,22 +551,22 @@ ggplot(c, aes(x = `I(Politics == 1 | Politics == 2)`, y = rownames(c))) +
 
 ```
 
-## R answer
 
-- The 95% confidence interval for the proportion of people significantly   interested in politics in the North East is  `r round(100*as.numeric(c[1,2:3]),1)`. 
-- By contrast, it is  `r round(100*as.numeric(c[7,2:3]),1)` in London. 
+## Question 5: Answer
+
+- The 95% confidence interval for the proportion of people significantly   interested in politics in the North East is  `r round(100*as.numeric(c[1,3:4]),1)`. 
+- By contrast, it is  `r round(100*as.numeric(c[7,3:4]),1)` in London. 
 - The region with the lowest precision of estimates (i.e. the widest confidence interval) is Wales, with more than   20  percentage point difference between the upper and lower bounds of the confidence interval.
 
 
 
 ## Question 6
 - Using interest in politics as before, and three category age `RAgecat5`: 
+- Produce a table showing the proportion of respondents significantly interested in politics by age group and gender
+- Assess whether the age difference in interest for politics is similar for each gender.
+- Is it fair to say that men aged under 35 are more likely to declare being  interested  in politics  than women aged 55 and above?
 
-  - Produce a table showing the proportion of respondents significantly interested in politics by age group and gender
-  - Assess whether the age difference in interest for politics is similar for each gender.
-  - Is it fair to say that men aged under 35 are more likely to declare being  interested  in politics  than women aged 55 and above?
-
-## Question 6 - R
+## Question 6 - Answer
 
 ```{r 6.1}
 round(
@@ -536,9 +579,14 @@ round(
 ``` 
 - Males and females aged 55+ tend to be more involved in politics than those who are younger.
 
-- Confidence intervals for the proportion of men under 35 and women above 55 interested in politics overlap; it is unlikely that they  differ significantly  in the population.
+- CIs for the proportion of men under 35 and women above 55 interested in politics overlap; it is unlikely that they  differ significantly  in the population.
 
+## Domain estimation - unresolved questions
 
+- Unique PSUs within strata
+- R vs Stata
+- Results may differ 
+- Broader issue: small subpopulations and  design-based estimation
 
 # 3. Dealing with  the absence of survey design variables 
 
