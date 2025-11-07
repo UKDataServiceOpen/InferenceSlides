@@ -31,7 +31,7 @@ format:
     css: ukds25.css
     embed-resources: true
     smaller: true
-    transition: zoom
+    transition: fade
     background-transition: fade
 filters:
   - reveal-header

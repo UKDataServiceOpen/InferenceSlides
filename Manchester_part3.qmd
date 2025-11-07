@@ -199,11 +199,16 @@ variables available in the dataset. The information can usually be found in the 
 - Are there any that are missing -- if so which ones? 
 - What is the name of the weights variables?
 
-::: {.callout-note}
+## Q2 Answers
 
-From the Data Dictionary it appears that the primary sampling units (sub regions) are identified bySpoint and the strata byStratID. The weights variable isWtFactor. Addresses are not provided but could be approximated with a household identifier.
+- From the Data Dictionary it appears that:
 
-::: 
+  - the primary sampling units (sub regions) are identified bySpoint
+  - the strata byStratID 
+  - the weights variable is WtFactor. 
+
+- Addresses are not provided but could be approximated with a household identifier.
+- Searching directly from within R or Stata may also be an option
 
 ## Preparing the data - R  
 

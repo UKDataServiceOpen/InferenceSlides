@@ -32,8 +32,9 @@ filters:
 ## Housekeeping
 
 - Toilets/fire exits
-- Four 50 minutes sessions 
 - Coffee / refreshments and lunch 
+- Four 50 minutes sessions 
+- Don't forget to get the data 
 - Your feedback is very important!
 
 ## Leave us your feedback
@@ -42,6 +43,7 @@ filters:
 
 ## Plan of the day
 
+**11.00-11.15** Introductions
 
 **11.15-12.00** Session 1: Survey Design: a refresher
 
@@ -72,10 +74,11 @@ filters:
   - Independent research centres / think tanks
 
 ## Data curated 
-- Surveys:
+- Survey microdata:
   - Large-scale cross-sectional UK government surveys series
   - Major UK longitudinal surveys 
-  - Multinational survey data & aggregate databases
+  - Multinational survey data 
+-  Aggregate databases: i.e. OECD, etc...
 - Census data
     – modern and historic records
 
@@ -140,7 +143,7 @@ tl;dr: some basic degree of familiarity with the topic is assumed
   
     - when some groups have different probabilities of taking part in surveys than others
     - when smaller groups need to be over-represented to obtain more reliable and precise statistics.
-    - costly in low population density areas
+    - costly, especially in low population density areas
 
 ## The survey design problem
 
