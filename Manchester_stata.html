@@ -1381,7 +1381,7 @@ Pierre Walthéry
 <ul>
 <li>Opening the dataset and declaring the survey design (scroll down for full output)</li>
 </ul>
-<div id="e50e378e" class="cell" data-execution_count="1">
+<div id="693948ec" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <style>div.jp-Notebook .datagrid-container {min-height: 448px; }</style>
 </div>
@@ -1408,7 +1408,7 @@ Sampling weights: WtFactor
 <ul>
 <li>Computing the survey design-informed version of the mean…</li>
 </ul>
-<div id="8b3949be" class="cell" data-execution_count="2">
+<div id="10c50508" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-stdout">
 <pre><code>. svy: mean RAgeE
 (running mean on estimation sample)
@@ -1433,7 +1433,7 @@ Number of PSUs   = 372            Population size = 3,988.0019
 <ul>
 <li>And the other two versions:</li>
 </ul>
-<div id="bec78754" class="cell" data-execution_count="3">
+<div id="6892b1b6" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-stdout">
 <pre><code>
 .   mean RAgeE [pw=WtFactor]
@@ -1470,7 +1470,7 @@ Mean estimation                          Number of obs = 3,988
 </section>
 <section id="computing-a-proportion-and-its-95-confidence-interval" class="slide level2">
 <h2>Computing a proportion and its 95% confidence interval</h2>
-<div id="3bd63d71" class="cell" data-execution_count="4">
+<div id="e6340f99" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-stdout">
 <pre><code>
 . ** Creating a dummy variable for significant interest in politics
@@ -1510,7 +1510,7 @@ Key: proportion = Cell proportion
 <ul>
 <li>… Proportions and CIs</li>
 </ul>
-<div id="b3f9c783" class="cell" data-execution_count="5">
+<div id="6ee2f481" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-stdout">
 <pre><code>. svy:ta Politics2, percent ci 
 (running tabulate on estimation sample)
@@ -1554,7 +1554,7 @@ Key: percentage = Cell percentage
 <ul>
 <li>Same for age categories</li>
 </ul>
-<div id="5667699c" class="cell" data-execution_count="6">
+<div id="48c686ab" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-stdout">
 <pre><code>. svy:ta RAgecat5, percent ci                         
 (running tabulate on estimation sample)
@@ -1594,7 +1594,7 @@ Key: percentage = Cell percentage
 </section>
 <section id="not-accounting-for-domain-estimation" class="slide level2">
 <h2>Not accounting for domain estimation</h2>
-<div id="41bcac52" class="cell" data-execution_count="7">
+<div id="70b7d5b9" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-stdout">
 <pre><code>. svy:prop Politics2 if GOR_ID==1, percent  cformat(%9.1f)
 (running proportion on estimation sample)
@@ -1623,7 +1623,7 @@ Note: Missing standard errors because of stratum with single
 <ul>
 <li>% interested in politics in the North East…</li>
 </ul>
-<div id="ebede284" class="cell" data-execution_count="8">
+<div id="65e336ff" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-stdout">
 <pre><code>. svy,subpop(if GOR_ID==1):prop Politics2, percent  cformat(%9.1f)
 (running proportion on estimation sample)
@@ -1654,7 +1654,7 @@ Note: 151 strata omitted because they contain no subpopulation
 <ul>
 <li>… And in London</li>
 </ul>
-<div id="4844e5d7" class="cell" data-execution_count="9">
+<div id="cfb92aff" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-stdout">
 <pre><code>. svy,subpop(if GOR_ID==7):prop Politics2, percent  cformat(%9.1f)
 (running proportion on estimation sample)
@@ -1682,7 +1682,7 @@ Note: 138 strata omitted because they contain no subpopulation
 </section>
 <section id="alternative-not-recommended" class="slide level2">
 <h2>Alternative (not recommended)</h2>
-<div id="2eb9005c" class="cell" data-execution_count="10">
+<div id="e81563a6" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-stdout">
 <pre><code>. svy:prop Politics2,over(GOR_ID) percent  cformat(%9.1f)
 (running proportion on estimation sample)
@@ -1737,7 +1737,7 @@ D Yorkshire and The Humber  |       35.6        3.2          29.5        42.2
 </section>
 <section id="q6---answer" class="slide level2">
 <h2>Q6 - Answer</h2>
-<div id="0c3dba6c" class="cell" data-execution_count="11">
+<div id="7c5a8424" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-stdout">
 <pre><code>
 . *  Men under 35
@@ -2934,14 +2934,14 @@ window.QuartoSupport = function () {
         previewLinks: false,
 
         // Transition style (none/fade/slide/convex/concave/zoom)
-        transition: 'fade',
+        transition: 'none',
 
         // Transition speed (default/fast/slow)
         transitionSpeed: 'default',
 
         // Transition style for full page slide backgrounds
         // (none/fade/slide/convex/concave/zoom)
-        backgroundTransition: 'fade',
+        backgroundTransition: 'none',
 
         // Number of slides away from the current that are visible
         viewDistance: 3,
@@ -3157,12 +3157,12 @@ window.QuartoSupport = function () {
       });
       </script>
     <script type="text/javascript">
-    window.addEventListener('load', function() {
-    var logo = document.querySelector('.slide-logo');
-    # var url = 'https://ukdataservice.ac.uk';
-    logo.style.cursor = 'pointer';
-    logo.addEventListener('click', function() {
-    window.open(url, '_blank');
+        window.addEventListener('load', function() {
+          var logo = document.querySelector('.slide-logo');
+          var url = 'https://ukdataservice.ac.uk';
+          logo.style.cursor = 'pointer';
+          logo.addEventListener('click', function() {
+            window.open(url, '_blank');
         });
       });
     </script>

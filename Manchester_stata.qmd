@@ -4,23 +4,31 @@ subtitle: 4. Stata examples (Exercises only)
 author: 
   name: Pierre Walthéry
 institute: UK Data Service
-
+bibliography: inference.bib
 date: "October 2025"
 date-format: MMMM YYYY
-brand: _brand.yml
+#brand: _brand.yml
 include-after-body:
   - text: |
       <script type="text/javascript">
-      window.addEventListener('load', function() {
-      var logo = document.querySelector('.slide-logo');
-      # var url = 'https://ukdataservice.ac.uk';
-      logo.style.cursor = 'pointer';
-      logo.addEventListener('click', function() {
-      window.open(url, '_blank');
+          window.addEventListener('load', function() {
+            var logo = document.querySelector('.slide-logo');
+            var url = 'https://ukdataservice.ac.uk';
+            logo.style.cursor = 'pointer';
+            logo.addEventListener('click', function() {
+              window.open(url, '_blank');
           });
         });
       </script>
+
+filters:
+  - reveal-header
+  - collapse-callout
   
+collapse-callout:
+  all: true
+
+
 format: 
   revealjs:
     scrollable: true
@@ -31,10 +39,7 @@ format:
     css: ukds25.css
     embed-resources: true
     smaller: true
-    transition: fade
-    background-transition: fade
-filters:
-  - reveal-header
+  
 
 jupyter: nbstata
 ---

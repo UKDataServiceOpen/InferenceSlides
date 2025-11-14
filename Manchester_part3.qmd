@@ -7,7 +7,7 @@ institute: UK Data Service
 bibliography: inference.bib
 date: "October 2025"
 date-format: MMMM YYYY
-brand: _brand.yml
+#brand: _brand.yml
 include-after-body:
   - text: |
       <script type="text/javascript">
@@ -43,6 +43,7 @@ format:
 
 execute: 
   echo: true
+  # purl: true
 #jupyter: nbstata
 ---
 ## Plan
