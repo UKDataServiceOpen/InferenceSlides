@@ -36,7 +36,7 @@ format:
       path: "pics/UKDS_Logos_Col_Grey_300dpi.png"
       href: "https://ukdataservice.ac.uk"
       alt: "UK Data Service logo"
-    css: ukds25.css
+    css: ukds_long.css
     embed-resources: true
     smaller: true
   
@@ -126,7 +126,7 @@ mean RAgeE
 # - Using command-based weighting does not alter the value of the estimated population mean when compared with SD informed estimates...
 - ... but would lead us to overestimating the precision/underestimate the uncertainty of our estimate -- by about plus or minus 3 months. 
 
-## Computing a proportion and its 95% confidence interval
+## Proportions and their 95% CI
 
 ```{stata Stata_4}
 ** Creating a dummy variable for significant interest in politics

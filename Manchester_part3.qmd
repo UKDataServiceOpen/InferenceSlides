@@ -36,7 +36,7 @@ format:
       path: "pics/UKDS_Logos_Col_Grey_300dpi.png"
       href: "https://ukdataservice.ac.uk"
       alt: "UK Data Service logo"
-    css: ukds25.css
+    css: ukds_long.css
     embed-resources: true
     smaller: true
   
@@ -289,7 +289,7 @@ round(                                    ### Rounding the results to one decima
   - inferring the mean age in the population?
   - computing the uncertainty  of this  estimate? 
 
-## Q. 3 answer (1): command-based weighting
+## Answer 1: command-based weighting
 
 - We need to compute means and CI separately: 
 
@@ -315,7 +315,7 @@ c(a.m,                                       ### Concatenating the mean..
 ```
 
  
-## Q. 3 answer (2):  unweighted estimates
+## Q.3 answer 2:  unweighted estimates
 
 
 ```{r}
@@ -508,6 +508,7 @@ Let's now plot this output:
 
 ```{r 5.8.1}
 #| output: asis
+#| fig-alt: "A plot of the proportion of 17-34 by regions"
 ggplot(c, aes(x = `I(RAgecat5 == 1)`, y = rownames(c))) +
   geom_point(size = 3, color = "#ff9800") +
   geom_errorbar(aes(xmin = ci_l, xmax = ci_u), width = 0.1, color = "#ff9800") +
@@ -545,6 +546,8 @@ Let's now plot this output:
 
 ```{r 5.8.3}
 #| output: asis
+#| fig-alt: "A plot of the proportion of those interested in politics a great deal or quite a lot by regions"
+
 ggplot(c, aes(x = `I(Politics == 1 | Politics == 2)`, y = rownames(c))) +
   geom_point(size = 3, color = "#ff9800") +
   geom_errorbar(aes(xmin = ci_l, xmax = ci_u), width = 0.1, color = "#ff9800") +
@@ -610,7 +613,7 @@ round(
 
 - The Office for National Statistics regularly publishes Deft tables for the LFS, but only  for their headline statistics.  
 
-![](pics/lfs_vol1_SE.png)
+![](pics/lfs_vol1_SE.png){fig-alt="Screenshot of the LFS Volume 1 Documentation showing standard errors and design factors"}
 
 ## Regional employment rates using R
 

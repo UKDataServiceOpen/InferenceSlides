@@ -36,13 +36,11 @@ format:
       path: "pics/UKDS_Logos_Col_Grey_300dpi.png"
       href: "https://ukdataservice.ac.uk"
       alt: "UK Data Service logo"
-    css: ukds25.css
+    css: ukds_long.css
     embed-resources: true
     smaller: true
 
 ---
-
-#  Inference in theory... <br>  <br>  ...and in practice
 
 
 ## This session  
@@ -109,8 +107,8 @@ data.frame(lfs |> filter(!(AGE<20 | (AGE>30 &AGE<50)))|> group_by(as_factor(URES
 
 - They are usually made of three components in cross sectional surveys:
 
-  - a *design* component that accounts for issues of unequal probability of selection of sample members resulting from survey design;
-  - a *non-response* component, correcting for (known) lower propensity to take part to surveys among certain categories of respondents.
+  - a *design* component that accounts for issues of unequal probability of selection of sample members resulting from survey design
+  - a *non-response* component, correcting for (known) lower propensity to take part to surveys among certain categories of respondents
   - A *calibrating* or benchmarking component that ensures that weighted demographic variables, such as age, sex and geography, match the current ONS population estimates.
 
 - These  are sometimes called ‘weights’ individually (eg 'Design weights'), but in practice they are often merged into a single variable. 
@@ -184,7 +182,7 @@ $D_{eff}$ and $D_{eft}$  are two versions of a coefficient meant to quantify  ho
     - Apply for access to the controlled version of the data if there is one
     - Or adjust standard errors when design factors are published by  the data producer, whenever possible.  
 
-## How precise does your study need to be?
+## How precise should my estimates be?
 - It is often assumed that by default, the highest degree of precision should be sought in any analysis.
 - Actual real-world circumstances of statistical analysis differ widely. At two extremes:
 
@@ -262,12 +260,12 @@ $D_{eff}$ and $D_{eft}$  are two versions of a coefficient meant to quantify  ho
 - Declare the survey design as SRS using survey commands
 - Compute your estimates, using survey estimation commands then:
 
-  - Check whether the data producer has published design effects; (also  Deft for the same population at another point in time).
+  - Check whether the data producer has published design effects (also  Deft for the same population at another point in time)
   - If so, adjust standard errors/CI accordingly
   - If no Deft are available, report SRS estimates; make it clear that the results are likely to be  biased 
-- The wider the SE or CI under SRS assumptions the larger the likely bias. 
-- Or: the smaller the (sub)sample, the larger the likely bias. 
-- In case of significance testing,  good practice is to rely on .01 or .001 significance thresholds
+- The wider the SE or CI under SRS assumptions the larger the likely bias 
+- Or: the smaller the (sub)sample, the larger the likely bias 
+- In case of significance testing,  good practice is to rely on .01 or .001 significance thresholds.
 
 ## One slide summary
 

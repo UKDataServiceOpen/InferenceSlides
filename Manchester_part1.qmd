@@ -36,7 +36,7 @@ format:
       path: "pics/UKDS_Logos_Col_Grey_300dpi.png"
       href: "https://ukdataservice.ac.uk"
       alt: "UK Data Service logo"
-    css: ukds25.css
+    css: ukds_long.css
     embed-resources: true
     smaller: true
 ---
@@ -132,7 +132,7 @@ tl;dr: some basic degree of familiarity with the topic is assumed
 
 # Basics of Survey Design
 
-![](pics/inference.png){fig-alt: "Stylised image of the circular relationship between inference and sampling .nostretch width="80%" fig-align="center"}
+![](pics/inference.png){fig-alt="Stylised image of the circular relationship between inference and sampling"}
 
 ## Samples and sampling 
 - Survey design:  strategies used to collect samples. 
@@ -206,7 +206,7 @@ tl;dr: some basic degree of familiarity with the topic is assumed
 :::
 
 ::: {.column width="60%"}
-![](pics/cluster.png){width=90%}
+![](pics/cluster.png){.nostretch  fig-alt="An image representing the clustering of addresses within the Postcode districts" width="90%" fig-align="center"}
 :::
 
 ::::
@@ -275,7 +275,7 @@ And so on…
 
 
 ## An example of stratified sampling 
-![](pics/strata.png){.nostretch width="80%" fig-align="center"}
+![](pics/strata.png){.nostretch width="80%" fig-align="center" fig-alt="An image representing the stratification of addresses within four regional strata" }
 
 
 - The population is divided into four strata: North, South, East and West. 
@@ -285,7 +285,7 @@ And so on…
 
 - UK surveys are usually stratified: 
 
-    - geographically (e.g. Government Office Regions); 
+    - geographically (e.g. Government Office Regions)
     - socio-economic  characteristics (occupations)   
     - or demography (e.g. proportion of people who are pensioners in areas). 
 
@@ -316,4 +316,3 @@ And so on…
 - These strike a compromise between issues such as tackling non response, unequal probability of selection, improving the representativeness of hard to reach groups while keeping fieldwork costs down.
 
 
-## References

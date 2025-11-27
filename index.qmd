@@ -1,4 +1,17 @@
 ---
+include-after-body:
+  - text: |
+      <script type="text/javascript">
+          window.addEventListener('load', function() {
+            var logo = document.querySelector('.slide-logo');
+            var url = 'https://ukdataservice.ac.uk';
+            logo.style.cursor = 'pointer';
+            logo.addEventListener('click', function() {
+              window.open(url, '_blank');
+          });
+        });
+      </script>
+
 format: 
   revealjs:
     scrollable: true
@@ -6,7 +19,7 @@ format:
       path: "pics/UKDS_Logos_Col_Grey_300dpi.png"
       href: "https://ukdataservice.ac.uk"
       alt: "UK Data Service logo"
-    css: ukds25.css
+    css: ukds_long.css
     embed-resources: true
     smaller: true
 
