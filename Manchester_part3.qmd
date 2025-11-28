@@ -186,7 +186,7 @@ We first need to find out about the survey design that was used in the 2017 BSA,
 
 - Primary sampling units were furthermore stratified according to geographies (sub regions), population density, and proportion of owner-occupiers. 
 
-- Sampling fraction (or proportion) was proportional to the size of postcode sectors (ie number of addresses)
+- Sampling fraction (or proportion) was proportional to the size of postcode sectors (i.e. number of addresses)
 
 
 ## Finding  the survey design variables 

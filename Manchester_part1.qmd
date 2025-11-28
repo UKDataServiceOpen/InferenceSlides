@@ -73,7 +73,7 @@ format:
 
 **14.45-15.30**  Session 4: R and Stata examples (2)
 
-# About the UK Data Service
+# The UK Data Service
 
 ## The UK Data Service in a nutshell
 - Main repository of UK secondary social science data
@@ -105,7 +105,7 @@ format:
       - datasets, methods,  and software focused
   - Online learning materials: 
   Data Skills Modules and pathways
-  - ‘Traditional’ survey-related and new forms of data ie computational social science.
+  - ‘Traditional’ survey-related and new forms of data i.e. computational social science.
 - Supporting data literacy among undergraduate students
 
 
@@ -128,7 +128,7 @@ format:
 
 tl;dr: some basic degree of familiarity with the topic is assumed
 
-# 1. Survey design and statistical inference - a refresher
+# 1. Survey design and <br>statistical inference: <br>A refresher
 
 # Basics of Survey Design
 
@@ -148,7 +148,7 @@ tl;dr: some basic degree of familiarity with the topic is assumed
 
 - *Random sampling* minimises the risk of obtaining unrepresentative samples and biased population estimates:
 
-  - ie when certain groups are under represented or  excluded.
+  - i.e. when certain groups are under represented or  excluded.
 
 - *Simple  random sampling* - directly drawing members of the target population   - is considered  the best way to  conduct RS and avoid bias... 
 
@@ -168,27 +168,27 @@ tl;dr: some basic degree of familiarity with the topic is assumed
 
 - Large scale social surveys  tend to rely on  techniques   better at striking this balance than SRS
 
-  - To ensure correct representation of each country of the UK (ie by  drawing  separate samples for each one of them). 
+  - To ensure correct representation of each country of the UK (i.e. by  drawing  separate samples for each one of them). 
   - To improve the precision of estimates estimates for  certain groups, for example ethnic minorities, and these need adequate sample size.
 
 - In effect SRS is more of a theoretical possibility than a real world sampling technique for  social surveys 
     - *Complex sample design* --> everything else - perhaps not the best label!
 
 
-## Common 'complex'  sampling techniques
+## Common  sampling techniques
 
 - **Clustering**
 
-  - Consists in dividing the population into groups  *as internally heterogeneous as possible* - ie ‘mini populations’, some of which are then randomly drawn while others are left out. 
+  - Consists in dividing the population into groups  *as internally heterogeneous as possible* - i.e. ‘mini populations’, some of which are then randomly drawn while others are left out. 
   - Comes together with *multistage sampling*:  i.e. drawing sample units in several steps rather than all at once
 
 - **Stratifying** also consists in dividing the population into groups according to predetermined characteristics, but this time  units are drawn from all of them 
 
-- **Adjusting sampling proportion** ie sampling more/less than the rest of the population for some groups
+- **Adjusting sampling proportion** i.e. sampling more/less than the rest of the population for some groups
 
 ## The UK context
 
-- No sampling frame ie national register of the population
+- No sampling frame i.e. national register of the population
 - The closest to it (in Great-Britain)  is Royal Mail's Postcode Address File: i.e. a  structured list of addresses 
 - For Northern Ireland the most commonly used is the Land and Property Services Agency’s (LPSA). 
 - We cannot use the PAF to directly draw samples of households or individuals, as their number at each address is not know.
@@ -279,7 +279,7 @@ And so on…
 
 
 - The population is divided into four strata: North, South, East and West. 
-- Within each strata five sampling units (ie addresses) are selected.
+- Within each strata five sampling units (i.e. addresses) are selected.
 
 ## Stratification
 

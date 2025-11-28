@@ -81,7 +81,7 @@ format:
 
   - *Survey weights* are a special type of variable in survey datasets, whose value reflects the relative 'importance' of observations in the sample. 
   - Prevent estimates from being biased by compensating for over/under representation of certain types of respondents. 
-  - Usually higher for observations less likely to be part of the sample (ie for young men in urban areas), lower for those more likely to be part of the sample (ie women over 50). 
+  - Usually higher for observations less likely to be part of the sample (i.e. for young men in urban areas), lower for those more likely to be part of the sample (i.e. women over 50). 
 
 ## Example: values of LFS  weights
 ```{r weights}
@@ -114,7 +114,7 @@ data.frame(lfs |> filter(!(AGE<20 | (AGE>30 &AGE<50)))|> group_by(as_factor(URES
 - These  are sometimes called ‘weights’ individually (eg 'Design weights'), but in practice they are often merged into a single variable. 
 
 ## Other kinds of weights 
-- In longitudinal surveys there is also a fourth layer of weights, that account for *attrition* (ie respondents dropping out). They usually consist in the inverse probability of dropping off at given waves of data. 
+- In longitudinal surveys there is also a fourth layer of weights, that account for *attrition* (i.e. respondents dropping out). They usually consist in the inverse probability of dropping off at given waves of data. 
 - Most of the time the will account for attrition between two or more  waves
 - Others components may sometimes be included, such as for benefit units components; whether proxy interviews should be included, diary weights in time-use surveys, etc..
 
@@ -174,7 +174,7 @@ $D_{eff}$ and $D_{eft}$  are two versions of a coefficient meant to quantify  ho
 - UKDS-curated datasets are usually available under one of three main flavours: open, safeguarded (EUL), controlled:
 
   - Most data producers include weights...
-  - A significant number of safeguarded datasets  do not include survey design variables ie PSU and strata
+  - A significant number of safeguarded datasets  do not include survey design variables i.e. PSU and strata
   - In some cases, the controlled version of the study do
   - Users are therefore left with the  option of either:
   
@@ -196,7 +196,7 @@ $D_{eff}$ and $D_{eft}$  are two versions of a coefficient meant to quantify  ho
 ## Subpopulation and sample size 
 
 - Given some survey data, most statistical software will compute near identical *weighted* point estimates irrespective of whether the proper sample design was accounted for. 
-- What will differ will be the variability and therefore the precision of the estimate ie confidence intervals and/or standard errors.
+- What will differ will be the variability and therefore the precision of the estimate i.e. confidence intervals and/or standard errors.
 - The effect of not accounting for the sample design is likely to be larger, the smaller the number of observations:
 
   - Small sample of a population 
@@ -214,11 +214,11 @@ $D_{eff}$ and $D_{eft}$  are two versions of a coefficient meant to quantify  ho
 - Two usages  of weight in most statistical software:
 
   - Command-specific weights are specified in the context of individual commands and often are not meant to be used with survey weights
-  - Survey weights: ie weights used in the context of estimation specific to survey design:
+  - Survey weights: i.e. weights used in the context of estimation specific to survey design:
 
 - Use command-specific weighting at your own risks: some software are known to produce incorrect results: SPSS and SAS, and sometimes Stata **will** produce wildly incorrect variance estimates when used with grossing weights. 
 
-## A plea for focusing on confidence intervals
+## A plea for using confidence intervals
 - Let's take one step back from point estimates
 - What are we in fact  estimating? 
 
@@ -227,7 +227,7 @@ $D_{eff}$ and $D_{eft}$  are two versions of a coefficient meant to quantify  ho
   - ... And more importantly:
   
     - Reflect the inherent uncertainty of statistical estimation
-    - And that of the world we are studying
+    - ...And that of the world we are studying
 
 # 3. Estimation scenarios
 
@@ -273,6 +273,6 @@ $D_{eff}$ and $D_{eft}$  are two versions of a coefficient meant to quantify  ho
 - Do not use on the fly weighting with grossing weight in SAS or SPSS
 - Do a cost-benefit analysis of the sensitivity  of your research vs the time cost of trying to obtain high quality estimates
 - Read the data documentation/look up  data producers website for Design factors or published estimates
-- Try to think of/report your estimates as a range of values ie confidence intervals rather than a point estimate. 
+- Try to think of/report your estimates as a range of values i.e. confidence intervals rather than a point estimate. 
 
 ## References
